@@ -1,530 +1,586 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Weekly Status Reports</title>
-  <style>
-    :root { --ink:#1a1a1a; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Status Reports</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{
-      font-family:Georgia,"Times New Roman",serif;
-      background:#fff;color:var(--ink);
-      line-height:1.8;
-      padding:40px 20px;
-    }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
 
-    .container{max-width:900px;margin:0 auto;}
+        .header {
+            background-color: #ffffff;
+            padding: 20px 40px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    .section{margin-bottom:40px;padding:20px 0;border-bottom:1px solid #e0e0e0;}
-    .section:last-child{border-bottom:none;}
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
 
-    .section-header{
-      margin-bottom:20px;
-      cursor:pointer;
-      user-select:none;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:15px;
-      background:#f8f8f8;
-      border:1px solid #e0e0e0;
-      transition:background .3s ease;
-    }
-    .section-header:hover{background:#f0f0f0;}
+        .header p {
+            font-size: 14px;
+            color: #666;
+            margin-top: 2px;
+        }
 
-    .section-title{
-      font-size:24px;
-      font-weight:400;
-      color:var(--ink);
-      margin:0;
-    }
+        .back-btn {
+            background-color: transparent;
+            border: 2px solid #1ca1c1;
+            color: #1ca1c1;
+            font-size: 14px;
+            cursor: pointer;
+            padding: 10px 20px;
+            border-radius: 6px;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
 
-    .toggle-icon{
-      font-size:24px;
-      color:#666;
-      transition:transform .3s ease;
-      min-width:30px;
-      text-align:center;
-    }
-    .toggle-icon.open{transform:rotate(0deg);}
-    .toggle-icon.closed{transform:rotate(-90deg);}
+        .back-btn:hover {
+            background-color: #1ca1c1;
+            color: white;
+        }
 
-    .section-content{
-      font-size:16px;
-      color:#333;
-      max-height:none;
-      overflow:visible;
-      transition:max-height .3s ease,opacity .3s ease;
-      opacity:1;
-    }
-    .section-content.hidden{
-      max-height:0;
-      opacity:0;
-      overflow:hidden;
-    }
+        .hero-section {
+            background: linear-gradient(135deg, #1ca1c1 0%, #4dd0e1 100%);
+            padding: 60px 40px;
+            text-align: center;
+        }
 
-    .status-reports{margin:10px 0 30px;}
-    .status-report{
-      background:#f8f8f8;
-      border:2px solid var(--ink);
-      padding:30px;
-      margin-bottom:30px;
-    }
+        .hero-title {
+            color: white;
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
 
-    .report-header{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-bottom:20px;
-      padding-bottom:15px;
-      border-bottom:2px solid var(--ink);
-    }
-    .report-header h3{
-      margin:0;
-      font-size:22px;
-      font-weight:400;
-    }
+        .hero-subtitle {
+            color: rgba(255,255,255,0.9);
+            font-size: 18px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
 
-    .report-status{
-      padding:8px 16px;
-      border-radius:4px;
-      font-size:12px;
-      font-weight:700;
-      text-transform:uppercase;
-      letter-spacing:1px;
-    }
-    .status-green{background:#4caf50;color:#fff;}
-    .status-at-risk{background:#ff9800;color:#fff;}
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
 
-    .report-content h4{
-      font-size:16px;
-      font-weight:700;
-      margin-top:20px;
-      margin-bottom:10px;
-      text-transform:uppercase;
-      letter-spacing:1px;
-      color:var(--ink);
-    }
-    .report-content ul{
-      margin:10px 0 20px 20px;
-      list-style:disc;
-    }
-    .report-content p{margin:10px 0;}
+        .status-report {
+            background-color: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            transition: all 0.3s;
+        }
 
-    .milestone-table{
-      width:100%;
-      border-collapse:collapse;
-      margin:20px 0;
-      font-size:14px;
-    }
-    .milestone-table th{
-      background:#e0e0e0;
-      padding:10px;
-      text-align:left;
-      font-weight:700;
-      border-bottom:2px solid var(--ink);
-    }
-    .milestone-table td{
-      padding:10px;
-      border-bottom:1px solid #e0e0e0;
-    }
+        .status-report:hover {
+            border-color: #1ca1c1;
+            box-shadow: 0 4px 12px rgba(28,161,193,0.15);
+        }
 
-    @media (max-width:768px){
-      body{padding:20px 15px;}
-      .section-title{font-size:20px;}
-      .report-header{flex-direction:column;align-items:flex-start;gap:10px;}
-    }
-  </style>
+        .report-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .report-header h3 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .report-status {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .status-green {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status-at-risk {
+            background-color: #fff3e0;
+            color: #e65100;
+        }
+
+        .report-content h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: #1ca1c1;
+        }
+
+        .report-content ul {
+            margin: 10px 0 20px 20px;
+            list-style: disc;
+        }
+
+        .report-content li {
+            margin-bottom: 8px;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .report-content p {
+            margin: 10px 0;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .report-content a {
+            color: #1ca1c1;
+            text-decoration: none;
+        }
+
+        .report-content a:hover {
+            text-decoration: underline;
+        }
+
+        .milestone-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+
+        .milestone-table th {
+            background: #f5f5f5;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #e0e0e0;
+            color: #666;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .milestone-table td {
+            padding: 12px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        @media (max-width: 768px) {
+            .report-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
-
-      <div class="section-content" id="section8-content">
-        <div class="status-reports">
-          <!-- Week 7 -->
-          <article class="status-report">
-            <div class="report-header">
-              <h3>Week 7 - Oct 3rd 2025</h3>
-              <span class="report-status status-green">On Track</span>
-            </div>
-            <div class="report-content">
-              <h4>Accomplishments This Week:</h4>
-              <ul>
-                <li>Completed project charter initial draft</li>
-                <li>Identified key stakeholders</li>
-                <li>Selected Microsoft Planner as project management tool</li>
-              </ul>
-
-              <h4>Work Planned for Next Week:</h4>
-              <ul>
-                <li>Finalize High-Level Scope section</li>
-                <li>Build initial Stakeholder Register</li>
-              </ul>
-
-              <h4>Issues/Blockers:</h4>
-              <ul>
-                <li>None at this time</li>
-              </ul>
-
-              <h4>Charter Updates:</h4>
-              <p>Initial charter created with all required sections.</p>
-            </div>
-          </article>
-
-          <!-- Week 9 -->
-          <article class="status-report">
-            <div class="report-header">
-              <h3>Week 9 - Oct 19th 2025</h3>
-              <span class="report-status status-at-risk">At Risk</span>
-            </div>
-            <div class="report-content">
-              <h4>Executive Summary:</h4>
-              <p>The project status is going steadily, but more progress needs to be made. This past week was more loaded than prior workloads, with two other separate school projects requiring immediate attention. After viewing this upcoming week's schedule I should have time to make this class project the priority.</p>
-
-              <h4>Accomplishments This Week:</h4>
-              <ul>
-                <li>Implemented Web Format</li>
-                <li>Got a peer review on LinkedIn</li>
-                <li>Received Certificate</li>
-              </ul>
-
-              <h4>Work Planned for Next Week:</h4>
-              <ul>
-                <li>Job Submission</li>
-                <li>Request LinkedIn reviews</li>
-                <li>Finish Team Project</li>
-              </ul>
-
-              <h4>Upcoming Milestones:</h4>
-              <table class="milestone-table">
-                <thead>
-                  <tr>
-                    <th>Milestone</th>
-                    <th>Target Date</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr><td>Portfolio</td><td>10/18/2025</td><td>ON TRACK</td></tr>
-                  <tr><td>LinkedIn</td><td>10/18/2025</td><td>ON TRACK</td></tr>
-                  <tr><td>Job Tracker</td><td>10/18/2025</td><td>ON TRACK</td></tr>
-                </tbody>
-              </table>
-
-              <h4>Issues &amp; Risks / Mitigations:</h4>
-              <p>No issues or risks identified for this reporting period.</p>
-
-              <h4>Changes Since Last Report:</h4>
-              <p>No changes occurred since the last reporting period.</p>
-            </div>
-          </article>
-
-          <!-- Week 10 -->
-          <article class="status-report">
-            <div class="report-header">
-              <h3>Week 10 - Oct 25th 2025</h3>
-              <span class="report-status status-green">On Track</span>
-            </div>
-            <div class="report-content">
-              <h4>Executive Summary:</h4>
-              <p>The project is back on track, with the website portion making strides in its design. I gamified the use of Claude ai, by only working on the web building of the project to the point where Claude will not allow the user to proceed until a specified time. I now look forward to those set times where I then crank-out as much productivity as possible to the UI.</p>
-
-              <h4>Accomplishments This Week:</h4>
-              <ul>
-                <li>Website</li>
-                <li>Linkedin</li>
-                <li>Discipline</li>
-              </ul>
-
-              <h4>Work Planned for Next Week:</h4>
-              <ul>
-                <li>Linkedin feedback</li>
-                <li>Design &amp; UI</li>
-                <li>Project Planner</li>
-              </ul>
-
-              <h4>Upcoming Milestones:</h4>
-              <table class="milestone-table">
-                <thead>
-                  <tr>
-                    <th>Milestone</th>
-                    <th>Target Date</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr><td>Portfolio</td><td>10/24/2025</td><td>ON TRACK</td></tr>
-                  <tr><td>Job Tracker</td><td>10/24/2025</td><td>AT RISK</td></tr>
-                  <tr><td>Linkedin</td><td>10/24/2025</td><td>ON TRACK</td></tr>
-                </tbody>
-              </table>
-
-              <h4>Issues &amp; Risks / Mitigations:</h4>
-              <p><strong>Job Tracker</strong> — <em>MEDIUM</em><br />
-                 Mitigation: I need to start looking into reaching out to companies.</p>
-
-              <h4>Changes Since Last Report:</h4>
-              <p><strong>Change #1</strong><br />
-                 <strong>Date:</strong> 2025-10-25<br />
-                 <strong>Description:</strong> The web building portion of the project was falling seriously behind.<br />
-                 <strong>Reason / Impact if not made:</strong> We are not back on track, after checking-in with instructor, Maria Espinoza.</p>
-            </div>
-          </article>
-
-          <!-- Week 11 -->
-          <article class="status-report">
-            <div class="report-header">
-              <h3>Week 11 - Nov 2nd 2025</h3>
-              <span class="report-status status-green">On Track</span>
-            </div>
-            <div class="report-content">
-              <h4>Executive Summary:</h4>
-              <p>All is well in the world of this projects health. I'm getting people outside of campus in agreeing to recorded interview, although they have yet to be conducted. The job search is slow but moving.</p>
-
-              <h4>Accomplishments This Week:</h4>
-              <ul>
-                <li>Began job search</li>
-                <li>Team Charter created</li>
-                <li>Portfolio progression</li>
-              </ul>
-
-              <h4>Plan for Next Week:</h4>
-              <ul>
-                <li>Portfolio web design</li>
-                <li>Continue job hunt</li>
-                <li>Team Meeting</li>
-              </ul>
-
-              <h4>Upcoming Milestones:</h4>
-              <table class="milestone-table">
-                <thead>
-                  <tr>
-                    <th>Milestone</th>
-                    <th>Target Date</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr><td>Create &amp; Design</td><td>11/1/2025</td><td>ON TRACK</td></tr>
-                  <tr><td>Job Tracker</td><td>11/1/2025</td><td>ON TRACK</td></tr>
-                  <tr><td>LinkedIn &amp; Networking</td><td>11/1/2025</td><td>ON TRACK</td></tr>
-                </tbody>
-              </table>
-
-              <h4>Issues &amp; Risks / Mitigations:</h4>
-              <p>No issues or risks identified for this reporting period.</p>
-
-              <h4>Changes Since Last Report:</h4>
-              <p>No changes occurred since the last reporting period.</p>
-            </div>
-          </article>
-
-          <!-- Week 12 -->
-          <article class="status-report">
-            <div class="report-header">
-              <h3>Week 12 - Nov 11th 2025</h3>
-              <span class="report-status status-green">On Track</span>
-            </div>
-            <div class="report-content">
-              <h4>Executive Summary:</h4>
-              <p>All is well with the project health. Completion is approximately seventy-two percent with two final deliverables remaining.</p>
-
-              <h4>Accomplishments This Week:</h4>
-              <ul>
-                <li>LinkedIn</li>
-                <li>Networking</li>
-                <li>Team Charter</li>
-              </ul>
-
-              <h4>Plan for Next Week:</h4>
-              <ul>
-                <li>Add remaining web building designs</li>
-                <li>Submit more applications congruent to the tech field</li>
-                <li>Conduct interviews with respondents</li>
-              </ul>
-
-              <h4>Upcoming Milestones:</h4>
-              <table class="milestone-table">
-                <thead>
-                  <tr>
-                    <th>Milestone</th>
-                    <th>Target Date</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr><td>Portfolio</td><td>11/10/2025</td><td>ON TRACK</td></tr>
-                  <tr><td>Job Tracker</td><td>11/10/2025</td><td>ON TRACK</td></tr>
-                  <tr><td>LinkedIn</td><td>11/10/2025</td><td>ON TRACK</td></tr>
-                </tbody>
-              </table>
-
-              <h4>Issues &amp; Risks / Mitigations:</h4>
-              <p>No issues or risks identified for this reporting period.</p>
-
-              <h4>Changes Since Last Report:</h4>
-              <p>No changes occurred since the last reporting period.</p>
-            </div>
-          </article>
-
-          <!-- Week 13 -->
-          <article class="status-report">
-            <div class="report-header">
-              <h3>Week 13 - Nov 12th 2025</h3>
-              <span class="report-status status-green">On Track</span>
-            </div>
-            <div class="report-content">
-              <h4>Executive Summary:</h4>
-              <p>This week focused on resolving issues with the project website and GitHub repository while acting on professor feedback. The LinkedIn, networking, and certification deliverables are now fully complete, and the portfolio hosting site is nearing completion with all remaining deliverables on track.</p>
-
-              <h4>Professor Feedback &amp; Charter Refinements:</h4>
-              <p>
-                Feedback received over prior weeks included:<br />
-                • "Your site seems to be having issues." (Oct 30th)<br />
-                • "For future weeks, I need you to actually call out the changes you made in the project management tool." (Oct 23rd)<br />
-                • "I am still not seeing the status updates…show me during class." (Nov 4th)
-              </p>
-              <p>
-                In response, some clarification was needed on the operations of the GitHub repository. The main issue was displaying the linked upon check-in. Refinements were made to the Project Charter in congruency as stated in the past assignments, ensuring that status updates and tool changes are clearly called out.
-              </p>
-
-              <h4>Accomplishments This Week:</h4>
-              <ul>
-                <li>Resolved issues related to the GitHub repository and project page links</li>
-                <li>Updated the Project Charter based on professor feedback</li>
-                <li>Marked completed items in the project management tool and captured updated screenshots</li>
-                <li>Fully completed LinkedIn, Networking, and Certification deliverables</li>
-                <li>Advanced build-out of the portfolio hosting site toward completion</li>
-              </ul>
-
-              <h4>Plan for Next Week:</h4>
-              <ul>
-                <li>Finalize and polish the portfolio hosting site</li>
-                <li>Submit additional job applications aligned with IT and tech roles</li>
-                <li>Continue updating the project tool and documenting changes</li>
-              </ul>
-
-              <h4>Upcoming Milestones:</h4>
-              <table class="milestone-table">
-                <thead>
-                  <tr>
-                    <th>Milestone</th>
-                    <th>Target Date</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr><td>Portfolio Hosting Site</td><td>Current Week</td><td>IN PROGRESS</td></tr>
-                  <tr><td>Job Applications Submitted</td><td>Current Week</td><td>IN PROGRESS</td></tr>
-                  <tr><td>Project Charter Finalized</td><td>Current Week</td><td>ON TRACK</td></tr>
-                </tbody>
-              </table>
-
-              <h4>Issues &amp; Risks / Mitigations:</h4>
-              <p>
-                No major issues or risks identified. The primary focus is ensuring timely completion of the portfolio site and job application submissions. Continued monitoring of site stability and deployment is in place to avoid further access issues.
-              </p>
-
-              <h4>Changes Since Last Report:</h4>
-              <p>
-                • The LinkedIn/Networking &amp; Certification deliverables are fully complete<br />
-                • All that remains for the Project Charter, in terms of deliverables, are applications submissions and the completion of the portfolio hosting site<br />
-                • Adjusted the Project Charter in response to professor comments<br />
-                • Clarified and improved how project status updates and completed items are surfaced in the project management tool<br />
-                • Resolved issues with project website visibility and GitHub-linked pages
-              </p>
-
-              <h4>Time &amp; Effort:</h4>
-              <p>Dedicated at least 90 minutes to meaningful project work. The website hosting the portfolio is near completion, and all remaining deliverables are on track.</p>
-            </div>
-          </article>
-
-          <!-- Week 14 -->
-          <article class="status-report">
-            <div class="report-header">
-              <h3>Week 14 - Nov 24th 2025</h3>
-              <span class="report-status status-green">On Track</span>
-            </div>
-            <div class="report-content">
-              <h4>Executive Summary:</h4>
-              <p>The website at <a href="https://ctonytech.com/" target="_blank" rel="noopener">ctonytech.com</a> is now officially completed and running satisfactorily. Most project milestones and deliverables are near or at completion. Remaining work centers on peer reviews, one final stakeholder interview, and actively securing a suitable career opportunity in tech.</p>
-
-              <h4>Professor Feedback &amp; Charter Refinements:</h4>
-              <p>
-                The professor noted that the latest visible status report on the project site was Week 12. In response, I make updates reflecting on posted assignments regularly. If any to all work were mistakenly absent, actions on my part have already been taken into effect. The latest status report has been added and the site continues to be updated regularly so that any previously missing work is now reflected in the Project Charter and status pages.
-              </p>
-
-              <h4>Accomplishments This Week:</h4>
-              <ul>
-                <li>Confirmed that the latest status report is included on the project website</li>
-                <li>Reviewed the overall project plan and tracked progress across all deliverables</li>
-                <li>Updated items in the project management tool and captured new screenshots</li>
-                <li>Documented an explanation of project plan changes for this final phase</li>
-                <li>Completed and launched the project website: <a href="https://ctonytech.com/" target="_blank" rel="noopener">ctonytech.com</a></li>
-              </ul>
-
-              <h4>Explanation of Project Plan Changes:</h4>
-              <p>
-                All major milestones and deliverables are now near completion. The project tool reflects that the remaining work for the semester consists primarily of peer reviews, completing one outstanding stakeholder interview, and focusing on securing an appropriate career opportunity aligned with IT.
-              </p>
-
-              <h4>Plan for Next Week:</h4>
-              <ul>
-                <li>Conduct the remaining stakeholder interview and integrate any insights</li>
-                <li>Complete required peer reviews and related course assignments</li>
-                <li>Continue submitting targeted job applications and networking for career opportunities</li>
-              </ul>
-
-              <h4>Upcoming Milestones:</h4>
-              <table class="milestone-table">
-                <thead>
-                  <tr>
-                    <th>Milestone</th>
-                    <th>Target Date</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr><td>Stakeholder Interview (Final)</td><td>End of Semester</td><td>IN PROGRESS</td></tr>
-                  <tr><td>Peer Reviews</td><td>End of Semester</td><td>IN PROGRESS</td></tr>
-                  <tr><td>Career Opportunity Secured</td><td>Post-Semester</td><td>OPEN</td></tr>
-                </tbody>
-              </table>
-
-              <h4>Issues &amp; Risks / Mitigations:</h4>
-              <p>
-                The main ongoing risk is the uncertainty around timing for securing a suitable career opportunity. This is being addressed through continued applications, networking, and use of the completed portfolio site to showcase skills and experience.
-              </p>
-
-              <h4>Changes Since Last Report:</h4>
-              <p>
-                • Website transitioned from "near completion" to fully live and functional<br />
-                • Project management tool updated to show all major deliverables as complete or near-complete<br />
-                • Project Charter and status pages refined to reflect end-of-semester progress and remaining external-facing tasks<br />
-                • All milestones and deliverables are near completion with only peer reviews, 1 stakeholder interview remaining, and securing a proper career opportunity
-              </p>
-
-              <h4>Time &amp; Effort:</h4>
-              <p>Dedicated at least 90 minutes to meaningful project work this week, including final site refinements, tool updates, and documentation. The website (ctonytech.com) is officially completed and now will undergo regular maintenance as all current websites do, but the site is running satisfactorily.</p>
-            </div>
-          </article>
+    <header class="header">
+        <div>
+            <h1>📊 Weekly Status Reports</h1>
+            <p>Project progress and milestone tracking</p>
         </div>
-      </div>
+        <a href="index.html" class="back-btn">← Back to Dashboard</a>
+    </header>
+
+    <section class="hero-section">
+        <h2 class="hero-title">Weekly Status Reports</h2>
+        <p class="hero-subtitle">Tracking progress, milestones, and deliverables throughout the project lifecycle</p>
     </section>
-  </div>
 
-  <script>
-    function toggleSection(header){
-      const content = header.nextElementSibling;
-      const icon = header.querySelector('.toggle-icon');
-      const expanded = header.getAttribute('aria-expanded') === 'true';
+    <main class="main-content">
+        <!-- Week 7 -->
+        <article class="status-report">
+            <div class="report-header">
+                <h3>Week 7 - Oct 3rd 2025</h3>
+                <span class="report-status status-green">On Track</span>
+            </div>
+            <div class="report-content">
+                <h4>Accomplishments This Week:</h4>
+                <ul>
+                    <li>Completed project charter initial draft</li>
+                    <li>Identified key stakeholders</li>
+                    <li>Selected Microsoft Planner as project management tool</li>
+                </ul>
 
-      content.classList.toggle('hidden');
-      icon.classList.toggle('closed');
-      icon.classList.toggle('open');
-      header.setAttribute('aria-expanded', String(!expanded));
-    }
-  </script>
+                <h4>Work Planned for Next Week:</h4>
+                <ul>
+                    <li>Finalize High-Level Scope section</li>
+                    <li>Build initial Stakeholder Register</li>
+                </ul>
+
+                <h4>Issues/Blockers:</h4>
+                <ul>
+                    <li>None at this time</li>
+                </ul>
+
+                <h4>Charter Updates:</h4>
+                <p>Initial charter created with all required sections.</p>
+            </div>
+        </article>
+
+        <!-- Week 9 -->
+        <article class="status-report">
+            <div class="report-header">
+                <h3>Week 9 - Oct 19th 2025</h3>
+                <span class="report-status status-at-risk">At Risk</span>
+            </div>
+            <div class="report-content">
+                <h4>Executive Summary:</h4>
+                <p>The project status is going steadily, but more progress needs to be made. This past week was more loaded than prior workloads, with two other separate school projects requiring immediate attention. After viewing this upcoming week's schedule I should have time to make this class project the priority.</p>
+
+                <h4>Accomplishments This Week:</h4>
+                <ul>
+                    <li>Implemented Web Format</li>
+                    <li>Got a peer review on LinkedIn</li>
+                    <li>Received Certificate</li>
+                </ul>
+
+                <h4>Work Planned for Next Week:</h4>
+                <ul>
+                    <li>Job Submission</li>
+                    <li>Request LinkedIn reviews</li>
+                    <li>Finish Team Project</li>
+                </ul>
+
+                <h4>Upcoming Milestones:</h4>
+                <table class="milestone-table">
+                    <thead>
+                        <tr>
+                            <th>Milestone</th>
+                            <th>Target Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Portfolio</td><td>10/18/2025</td><td>ON TRACK</td></tr>
+                        <tr><td>LinkedIn</td><td>10/18/2025</td><td>ON TRACK</td></tr>
+                        <tr><td>Job Tracker</td><td>10/18/2025</td><td>ON TRACK</td></tr>
+                    </tbody>
+                </table>
+
+                <h4>Issues & Risks / Mitigations:</h4>
+                <p>No issues or risks identified for this reporting period.</p>
+
+                <h4>Changes Since Last Report:</h4>
+                <p>No changes occurred since the last reporting period.</p>
+            </div>
+        </article>
+
+        <!-- Week 10 -->
+        <article class="status-report">
+            <div class="report-header">
+                <h3>Week 10 - Oct 25th 2025</h3>
+                <span class="report-status status-green">On Track</span>
+            </div>
+            <div class="report-content">
+                <h4>Executive Summary:</h4>
+                <p>The project is back on track, with the website portion making strides in its design. I gamified the use of Claude ai, by only working on the web building of the project to the point where Claude will not allow the user to proceed until a specified time. I now look forward to those set times where I then crank-out as much productivity as possible to the UI.</p>
+
+                <h4>Accomplishments This Week:</h4>
+                <ul>
+                    <li>Website</li>
+                    <li>Linkedin</li>
+                    <li>Discipline</li>
+                </ul>
+
+                <h4>Work Planned for Next Week:</h4>
+                <ul>
+                    <li>Linkedin feedback</li>
+                    <li>Design & UI</li>
+                    <li>Project Planner</li>
+                </ul>
+
+                <h4>Upcoming Milestones:</h4>
+                <table class="milestone-table">
+                    <thead>
+                        <tr>
+                            <th>Milestone</th>
+                            <th>Target Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Portfolio</td><td>10/24/2025</td><td>ON TRACK</td></tr>
+                        <tr><td>Job Tracker</td><td>10/24/2025</td><td>AT RISK</td></tr>
+                        <tr><td>Linkedin</td><td>10/24/2025</td><td>ON TRACK</td></tr>
+                    </tbody>
+                </table>
+
+                <h4>Issues & Risks / Mitigations:</h4>
+                <p><strong>Job Tracker</strong> — <em>MEDIUM</em><br />
+                   Mitigation: I need to start looking into reaching out to companies.</p>
+
+                <h4>Changes Since Last Report:</h4>
+                <p><strong>Change #1</strong><br />
+                   <strong>Date:</strong> 2025-10-25<br />
+                   <strong>Description:</strong> The web building portion of the project was falling seriously behind.<br />
+                   <strong>Reason / Impact if not made:</strong> We are not back on track, after checking-in with instructor, Maria Espinoza.</p>
+            </div>
+        </article>
+
+        <!-- Week 11 -->
+        <article class="status-report">
+            <div class="report-header">
+                <h3>Week 11 - Nov 2nd 2025</h3>
+                <span class="report-status status-green">On Track</span>
+            </div>
+            <div class="report-content">
+                <h4>Executive Summary:</h4>
+                <p>All is well in the world of this projects health. I'm getting people outside of campus in agreeing to recorded interview, although they have yet to be conducted. The job search is slow but moving.</p>
+
+                <h4>Accomplishments This Week:</h4>
+                <ul>
+                    <li>Began job search</li>
+                    <li>Team Charter created</li>
+                    <li>Portfolio progression</li>
+                </ul>
+
+                <h4>Plan for Next Week:</h4>
+                <ul>
+                    <li>Portfolio web design</li>
+                    <li>Continue job hunt</li>
+                    <li>Team Meeting</li>
+                </ul>
+
+                <h4>Upcoming Milestones:</h4>
+                <table class="milestone-table">
+                    <thead>
+                        <tr>
+                            <th>Milestone</th>
+                            <th>Target Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Create & Design</td><td>11/1/2025</td><td>ON TRACK</td></tr>
+                        <tr><td>Job Tracker</td><td>11/1/2025</td><td>ON TRACK</td></tr>
+                        <tr><td>LinkedIn & Networking</td><td>11/1/2025</td><td>ON TRACK</td></tr>
+                    </tbody>
+                </table>
+
+                <h4>Issues & Risks / Mitigations:</h4>
+                <p>No issues or risks identified for this reporting period.</p>
+
+                <h4>Changes Since Last Report:</h4>
+                <p>No changes occurred since the last reporting period.</p>
+            </div>
+        </article>
+
+        <!-- Week 12 -->
+        <article class="status-report">
+            <div class="report-header">
+                <h3>Week 12 - Nov 11th 2025</h3>
+                <span class="report-status status-green">On Track</span>
+            </div>
+            <div class="report-content">
+                <h4>Executive Summary:</h4>
+                <p>All is well with the project health. Completion is approximately seventy-two percent with two final deliverables remaining.</p>
+
+                <h4>Accomplishments This Week:</h4>
+                <ul>
+                    <li>LinkedIn</li>
+                    <li>Networking</li>
+                    <li>Team Charter</li>
+                </ul>
+
+                <h4>Plan for Next Week:</h4>
+                <ul>
+                    <li>Add remaining web building designs</li>
+                    <li>Submit more applications congruent to the tech field</li>
+                    <li>Conduct interviews with respondents</li>
+                </ul>
+
+                <h4>Upcoming Milestones:</h4>
+                <table class="milestone-table">
+                    <thead>
+                        <tr>
+                            <th>Milestone</th>
+                            <th>Target Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Portfolio</td><td>11/10/2025</td><td>ON TRACK</td></tr>
+                        <tr><td>Job Tracker</td><td>11/10/2025</td><td>ON TRACK</td></tr>
+                        <tr><td>LinkedIn</td><td>11/10/2025</td><td>ON TRACK</td></tr>
+                    </tbody>
+                </table>
+
+                <h4>Issues & Risks / Mitigations:</h4>
+                <p>No issues or risks identified for this reporting period.</p>
+
+                <h4>Changes Since Last Report:</h4>
+                <p>No changes occurred since the last reporting period.</p>
+            </div>
+        </article>
+
+        <!-- Week 13 -->
+        <article class="status-report">
+            <div class="report-header">
+                <h3>Week 13 - Nov 12th 2025</h3>
+                <span class="report-status status-green">On Track</span>
+            </div>
+            <div class="report-content">
+                <h4>Executive Summary:</h4>
+                <p>This week focused on resolving issues with the project website and GitHub repository while acting on professor feedback. The LinkedIn, networking, and certification deliverables are now fully complete, and the portfolio hosting site is nearing completion with all remaining deliverables on track.</p>
+
+                <h4>Professor Feedback & Charter Refinements:</h4>
+                <p>
+                    Feedback received over prior weeks included:<br />
+                    • "Your site seems to be having issues." (Oct 30th)<br />
+                    • "For future weeks, I need you to actually call out the changes you made in the project management tool." (Oct 23rd)<br />
+                    • "I am still not seeing the status updates…show me during class." (Nov 4th)
+                </p>
+                <p>
+                    In response, some clarification was needed on the operations of the GitHub repository. The main issue was displaying the linked upon check-in. Refinements were made to the Project Charter in congruency as stated in the past assignments, ensuring that status updates and tool changes are clearly called out.
+                </p>
+
+                <h4>Accomplishments This Week:</h4>
+                <ul>
+                    <li>Resolved issues related to the GitHub repository and project page links</li>
+                    <li>Updated the Project Charter based on professor feedback</li>
+                    <li>Marked completed items in the project management tool and captured updated screenshots</li>
+                    <li>Fully completed LinkedIn, Networking, and Certification deliverables</li>
+                    <li>Advanced build-out of the portfolio hosting site toward completion</li>
+                </ul>
+
+                <h4>Plan for Next Week:</h4>
+                <ul>
+                    <li>Finalize and polish the portfolio hosting site</li>
+                    <li>Submit additional job applications aligned with IT and tech roles</li>
+                    <li>Continue updating the project tool and documenting changes</li>
+                </ul>
+
+                <h4>Upcoming Milestones:</h4>
+                <table class="milestone-table">
+                    <thead>
+                        <tr>
+                            <th>Milestone</th>
+                            <th>Target Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Portfolio Hosting Site</td><td>Current Week</td><td>IN PROGRESS</td></tr>
+                        <tr><td>Job Applications Submitted</td><td>Current Week</td><td>IN PROGRESS</td></tr>
+                        <tr><td>Project Charter Finalized</td><td>Current Week</td><td>ON TRACK</td></tr>
+                    </tbody>
+                </table>
+
+                <h4>Issues & Risks / Mitigations:</h4>
+                <p>
+                    No major issues or risks identified. The primary focus is ensuring timely completion of the portfolio site and job application submissions. Continued monitoring of site stability and deployment is in place to avoid further access issues.
+                </p>
+
+                <h4>Changes Since Last Report:</h4>
+                <p>
+                    • The LinkedIn/Networking & Certification deliverables are fully complete<br />
+                    • All that remains for the Project Charter, in terms of deliverables, are applications submissions and the completion of the portfolio hosting site<br />
+                    • Adjusted the Project Charter in response to professor comments<br />
+                    • Clarified and improved how project status updates and completed items are surfaced in the project management tool<br />
+                    • Resolved issues with project website visibility and GitHub-linked pages
+                </p>
+
+                <h4>Time & Effort:</h4>
+                <p>Dedicated at least 90 minutes to meaningful project work. The website hosting the portfolio is near completion, and all remaining deliverables are on track.</p>
+            </div>
+        </article>
+
+        <!-- Week 14 -->
+        <article class="status-report">
+            <div class="report-header">
+                <h3>Week 14 - Nov 24th 2025</h3>
+                <span class="report-status status-green">On Track</span>
+            </div>
+            <div class="report-content">
+                <h4>Executive Summary:</h4>
+                <p>The website at <a href="https://ctonytech.com/" target="_blank" rel="noopener">ctonytech.com</a> is now officially completed and running satisfactorily. Most project milestones and deliverables are near or at completion. Remaining work centers on peer reviews, one final stakeholder interview, and actively securing a suitable career opportunity in tech.</p>
+
+                <h4>Professor Feedback & Charter Refinements:</h4>
+                <p>
+                    The professor noted that the latest visible status report on the project site was Week 12. In response, I make updates reflecting on posted assignments regularly. If any to all work were mistakenly absent, actions on my part have already been taken into effect. The latest status report has been added and the site continues to be updated regularly so that any previously missing work is now reflected in the Project Charter and status pages.
+                </p>
+
+                <h4>Accomplishments This Week:</h4>
+                <ul>
+                    <li>Confirmed that the latest status report is included on the project website</li>
+                    <li>Reviewed the overall project plan and tracked progress across all deliverables</li>
+                    <li>Updated items in the project management tool and captured new screenshots</li>
+                    <li>Documented an explanation of project plan changes for this final phase</li>
+                    <li>Completed and launched the project website: <a href="https://ctonytech.com/" target="_blank" rel="noopener">ctonytech.com</a></li>
+                </ul>
+
+                <h4>Explanation of Project Plan Changes:</h4>
+                <p>
+                    All major milestones and deliverables are now near completion. The project tool reflects that the remaining work for the semester consists primarily of peer reviews, completing one outstanding stakeholder interview, and focusing on securing an appropriate career opportunity aligned with IT.
+                </p>
+
+                <h4>Plan for Next Week:</h4>
+                <ul>
+                    <li>Conduct the remaining stakeholder interview and integrate any insights</li>
+                    <li>Complete required peer reviews and related course assignments</li>
+                    <li>Continue submitting targeted job applications and networking for career opportunities</li>
+                </ul>
+
+                <h4>Upcoming Milestones:</h4>
+                <table class="milestone-table">
+                    <thead>
+                        <tr>
+                            <th>Milestone</th>
+                            <th>Target Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Stakeholder Interview (Final)</td><td>End of Semester</td><td>IN PROGRESS</td></tr>
+                        <tr><td>Peer Reviews</td><td>End of Semester</td><td>IN PROGRESS</td></tr>
+                        <tr><td>Career Opportunity Secured</td><td>Post-Semester</td><td>OPEN</td></tr>
+                    </tbody>
+                </table>
+
+                <h4>Issues & Risks / Mitigations:</h4>
+                <p>
+                    The main ongoing risk is the uncertainty around timing for securing a suitable career opportunity. This is being addressed through continued applications, networking, and use of the completed portfolio site to showcase skills and experience.
+                </p>
+
+                <h4>Changes Since Last Report:</h4>
+                <p>
+                    • Website transitioned from "near completion" to fully live and functional<br />
+                    • Project management tool updated to show all major deliverables as complete or near-complete<br />
+                    • Project Charter and status pages refined to reflect end-of-semester progress and remaining external-facing tasks<br />
+                    • All milestones and deliverables are near completion with only peer reviews, 1 stakeholder interview remaining, and securing a proper career opportunity
+                </p>
+
+                <h4>Time & Effort:</h4>
+                <p>Dedicated at least 90 minutes to meaningful project work this week, including final site refinements, tool updates, and documentation. The website (ctonytech.com) is officially completed and now will undergo regular maintenance as all current websites do, but the site is running satisfactorily.</p>
+            </div>
+        </article>
+    </main>
 </body>
 </html>
