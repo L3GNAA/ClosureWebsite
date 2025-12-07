@@ -3,608 +3,388 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Goal - Project Charter</title>
+    <title>Peer Reviews - Project Management</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: 'Georgia', 'Times New Roman', serif;
-            background: #ffffff;
-            color: #1a1a1a;
-            line-height: 1.8;
-            padding: 40px 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
         }
-        
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-        
+
         .header {
-            text-align: center;
-            padding: 60px 20px;
-            border-bottom: 3px solid #1a1a1a;
-            margin-bottom: 50px;
+            background-color: #ffffff;
+            padding: 20px 40px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        
+
         .header h1 {
-            font-size: 48px;
-            font-weight: 400;
-            letter-spacing: 2px;
-            margin-bottom: 15px;
+            font-size: 24px;
+            font-weight: 600;
             color: #1a1a1a;
         }
-        
-        .header p {
+
+        .header-btn {
+            background-color: #1ca1c1;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .header-btn:hover {
+            background-color: #1589a6;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, #1ca1c1 0%, #4dd0e1 100%);
+            padding: 60px 40px;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-section h2 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .hero-section p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        .intro-section {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .intro-section h3 {
+            font-size: 24px;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+        }
+
+        .intro-section p {
             font-size: 16px;
             color: #666;
-            font-style: italic;
         }
-        
-        .student-info {
-            background: #f8f8f8;
-            padding: 30px;
-            margin-bottom: 50px;
-            border-left: 4px solid #1a1a1a;
+
+        .reviews-container {
+            display: grid;
+            gap: 40px;
         }
-        
-        .student-info h3 {
-            font-size: 20px;
-            font-weight: 400;
-            margin-bottom: 20px;
+
+        .review-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-left: 5px solid #1ca1c1;
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .reviewer-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1ca1c1 0%, #4dd0e1 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: white;
+        }
+
+        .reviewer-info h4 {
+            font-size: 22px;
             color: #1a1a1a;
+            margin-bottom: 5px;
         }
-        
-        .info-grid {
+
+        .reviewer-info p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .review-section {
+            margin-bottom: 30px;
+        }
+
+        .review-section h5 {
+            font-size: 18px;
+            color: #1ca1c1;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .review-section p {
+            font-size: 16px;
+            color: #333;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+
+        .review-section ul {
+            margin-left: 25px;
+            margin-top: 10px;
+        }
+
+        .review-section li {
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .score-badge {
+            display: inline-block;
+            background-color: #e3f7ff;
+            color: #0288d1;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .summary-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
+            margin-top: 40px;
         }
-        
-        .info-item {
-            padding: 15px 0;
-        }
-        
-        .info-label {
-            font-weight: 700;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #666;
-            margin-bottom: 5px;
-        }
-        
-        .info-value {
-            font-size: 16px;
-            color: #1a1a1a;
-        }
-        
-        .toc {
-            background: #f8f8f8;
-            padding: 40px;
-            margin-bottom: 50px;
-            border: 2px solid #1a1a1a;
-        }
-        
-        .toc h2 {
-            font-size: 24px;
-            font-weight: 400;
-            margin-bottom: 25px;
-            color: #1a1a1a;
-        }
-        
-        .toc ol {
-            list-style-position: inside;
-            font-size: 16px;
-        }
-        
-        .toc li {
-            margin: 12px 0;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .toc li:hover {
-            margin-left: 10px;
-            font-weight: 700;
-        }
-        
-        .toc a {
-            color: #1a1a1a;
-            text-decoration: none;
-        }
-        
-        .toc a:hover {
-            text-decoration: underline;
-        }
-        
-        .section {
-            margin-bottom: 60px;
-            padding: 40px 0;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .section:last-child {
-            border-bottom: none;
-        }
-        
-        .section-header {
-            margin-bottom: 30px;
-        }
-        
-        .section-title {
-            font-size: 28px;
-            font-weight: 400;
-            color: #1a1a1a;
-            margin-bottom: 10px;
-        }
-        
-        .section-content {
-            font-size: 16px;
-            color: #333;
-        }
-        
-        .section-content h3,
-        .section-content h4 {
-            font-weight: 400;
-            margin: 25px 0 15px 0;
-            color: #1a1a1a;
-        }
-        
-        .section-content h3 {
-            font-size: 22px;
-        }
-        
-        .section-content h4 {
-            font-size: 18px;
-        }
-        
-        .section-content p {
-            margin: 15px 0;
-            text-align: justify;
-        }
-        
-        .section-content ul {
-            margin: 20px 0 20px 40px;
-            list-style-type: disc;
-        }
-        
-        .section-content li {
-            margin: 10px 0;
-        }
-        
-        .instructions {
-            background: #f0f0f0;
-            padding: 20px;
-            margin: 20px 0;
-            border-left: 3px solid #666;
-            font-size: 14px;
-            font-style: italic;
-        }
-        
-        .instructions strong {
-            font-style: normal;
-            display: block;
-            margin-bottom: 10px;
-        }
-        
-        .scope-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin: 30px 0;
-        }
-        
-        .scope-card {
+
+        .summary-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
             padding: 25px;
-            border: 2px solid #1a1a1a;
-        }
-        
-        .scope-card h4 {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .scope-card ul {
-            margin: 0 0 0 20px;
-        }
-        
-        .stakeholder-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 30px 0;
-            font-size: 14px;
-        }
-        
-        .stakeholder-table th {
-            background: #1a1a1a;
-            color: white;
-            padding: 15px;
-            text-align: left;
-            font-weight: 400;
-            text-transform: uppercase;
-            font-size: 12px;
-            letter-spacing: 1px;
-        }
-        
-        .stakeholder-table td {
-            padding: 15px;
-            border-bottom: 1px solid #e0e0e0;
-            vertical-align: top;
-        }
-        
-        .stakeholder-table tr:hover {
-            background: #f8f8f8;
-        }
-        
-        .image-container {
-            margin: 40px 0;
+            border-radius: 10px;
             text-align: center;
         }
-        
-        .image-container img {
-            max-width: 100%;
-            height: auto;
-            border: 1px solid #e0e0e0;
-            margin: 20px 0;
-        }
-        
-        .back-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: #1a1a1a;
-            color: white;
-            padding: 15px 20px;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
+
+        .summary-card h4 {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 10px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            transition: all 0.3s ease;
         }
-        
-        .back-to-top:hover {
-            background: #333;
+
+        .summary-card .score {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1ca1c1;
         }
-        
-        @media print {
-            .back-to-top {
-                display: none;
-            }
-        }
-        
+
         @media (max-width: 768px) {
-            body {
-                padding: 20px 15px;
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
             }
-            
-            .header h1 {
+
+            .hero-section h2 {
                 font-size: 32px;
             }
-            
-            .toc {
+
+            .main-content {
+                padding: 40px 20px;
+            }
+
+            .review-card {
                 padding: 25px;
             }
-            
-            .section {
-                padding: 20px 0;
-            }
-            
-            .scope-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .stakeholder-table {
-                font-size: 12px;
-            }
-            
-            .stakeholder-table th,
-            .stakeholder-table td {
-                padding: 10px;
+
+            .review-header {
+                flex-direction: column;
+                text-align: center;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>MY GOAL</h1>
-            <p>Project Charter — Managing IT Projects Course</p>
-        </div>
-        
-        <div class="student-info">
-            <h3>Student Information</h3>
-            <div class="info-grid">
-                <div class="info-item">
-                    <div class="info-label">Student Name</div>
-                    <div class="info-value">Angel Antonio Contreras-Reyes</div>
-                </div>
-                <div class="info-item">
-                    <div class="info-label">Course</div>
-                    <div class="info-value">Managing IT Projects</div>
-                </div>
-                <div class="info-item">
-                    <div class="info-label">Semester</div>
-                    <div class="info-value">Fall 2025</div>
-                </div>
-            </div>
+    <header class="header">
+        <h1>Peer Review Feedback</h1>
+        <a href="index.html" class="header-btn">← Back to Dashboard</a>
+    </header>
+
+    <section class="hero-section">
+        <h2>Peer Reviews & Feedback</h2>
+        <p>Constructive feedback from classmates on project deliverables</p>
+    </section>
+
+    <main class="main-content">
+        <div class="intro-section">
+            <h3>About This Section</h3>
+            <p>This page contains peer review feedback received from classmates Hansen Liew and Fernando Olvera for the Breaking Into Tech and Business-Align Job Hunt projects. Their insights have been valuable in identifying strengths and areas for improvement in project documentation and execution.</p>
         </div>
 
-        <div class="toc">
-            <h2>Table of Contents</h2>
-            <ol>
-                <li><a href="#section1">Project Title & Description</a></li>
-                <li><a href="#section2">Vision, Mission & Strategy Alignment</a></li>
-                <li><a href="#section3">Business Case & Justification</a></li>
-                <li><a href="#section4">High-Level Scope</a></li>
-                <li><a href="#section5">Stakeholder Register</a></li>
-                <li><a href="#section6">Methodology Explanation</a></li>
-                <li><a href="#section7">Project Tool</a></li>
-                <li><a href="#section8">Additional Charter Components</a></li>
-            </ol>
-        </div>
-
-        <div class="section" id="section1">
-            <div class="section-header">
-                <h2 class="section-title">1. Project Title & Description</h2>
-            </div>
-            <div class="section-content">
-                <div class="instructions">
-                    <strong>Instructions:</strong>
-                    Replace the placeholder below with your specific project information. Include a clear project name and 2-3 sentences describing what you will deliver.
-                </div>
-                
-                <h3>Project Title: My Goal</h3>
-                <p>I am choosing to pursue an entry-level position in Information Technology. I selected this project because it directly supports my academic and professional development. By optimizing a variety of software tools, I can set a pace where establishing myself in the IT field is possible by the end of the semester.</p>
-            </div>
-        </div>
-
-        <div class="section" id="section2">
-            <div class="section-header">
-                <h2 class="section-title">2. Vision, Mission & Strategy Alignment</h2>
-            </div>
-            <div class="section-content">
-                <div class="instructions">
-                    <strong>Instructions:</strong>
-                    Explain how this project aligns with your personal mission, vision, and strategic goals. Reference your previous mission/vision/strategy work.
-                </div>
-                
-                <h4>Personal Mission Connection:</h4>
-                <p>Create and refine a plan where deliverables/milestones can be met for landing an entry-level position in the field of Information Technology.</p>
-                
-                <h4>Vision Alignment:</h4>
-                <p>Transitioning into the industry where I can apply and gain knowledge/skills in relation to the IT field. By being in alignment with the stated trajectory all desired facets can be achieved.</p>
-                
-                <h4>Strategic Goal Support:</h4>
-                <p>The field of Tech can prove overwhelming by the large amount of career choice. Curating the development of this personal project will structure the importance of different tasks that need to be accomplished.</p>
-            </div>
-        </div>
-
-        <div class="section" id="section3">
-            <div class="section-header">
-                <h2 class="section-title">3. Business Case & Justification</h2>
-            </div>
-            <div class="section-content">
-                <div class="instructions">
-                    <strong>Instructions:</strong>
-                    Describe how this project will add value to you either professionally or personally. What benefits will you gain?
-                </div>
-                
-                <h4>Professional Value:</h4>
-                <p>Building this project will expose me to new skills and apply them to future endeavors.</p>
-                
-                <h4>Personal Value:</h4>
-                <p>This project will allow me to focus on building my skills in a realistic and achievable way within the given semester.</p>
-                
-                <h4>Learning Outcomes:</h4>
-                <p>I intend to procure technical skills during the course of this project, as well as obtaining project management experience while also gaining more industry knowledge.</p>
-            </div>
-        </div>
-
-        <div class="section" id="section4">
-            <div class="section-header">
-                <h2 class="section-title">4. High-Level Scope</h2>
-            </div>
-            <div class="section-content">
-                <div class="scope-grid">
-                    <div class="scope-card">
-                        <h4>In Scope for Semester Project</h4>
-                        <ul>
-                            <li>Personal Introduction & Background</li>
-                            <li>Skills Inventory</li>
-                            <li>Resume Development</li>
-                            <li>Coursework & Certifications</li>
-                            <li>Career Goals & Roadmap</li>
-                            <li>Work Samples/Projects Section</li>
-                            <li>Reflection & Growth Summary</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="scope-card">
-                        <h4>Roadmap Items (≤6 Months)</h4>
-                        <ul>
-                            <li>Earn an Entry-Level IT Certification</li>
-                            <li>Build a Personal Website/Portfolio</li>
-                            <li>Expand Project Showcase</li>
-                            <li>Professional Networking Growth</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="scope-card">
-                        <h4>Out of Scope</h4>
-                        <ul>
-                            <li>Advanced Research Work</li>
-                            <li>Developing Full Software Applications</li>
-                            <li>Industry-Level Certification Beyond Entry-Level</li>
-                            <li>Paid Professional Experience</li>
-                            <li>Cross-Disciplinary Projects</li>
-                            <li>Full Business Startup or Entrepreneurial Venture</li>
-                        </ul>
+        <div class="reviews-container">
+            <!-- Review from Hansen Liew -->
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-icon">👤</div>
+                    <div class="reviewer-info">
+                        <h4>Hansen Liew</h4>
+                        <p>Peer Reviewer | Breaking Into Tech Project</p>
+                        <span class="score-badge">Grade: 127.0 / 140 (90.7%)</span>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <div class="section" id="section5">
-            <div class="section-header">
-                <h2 class="section-title">5. Stakeholder Register</h2>
-            </div>
-            <div class="section-content">
-                <table class="stakeholder-table">
-                    <thead>
-                        <tr>
-                            <th>Stakeholder</th>
-                            <th>Category</th>
-                            <th>Role/Interest</th>
-                            <th>Power</th>
-                            <th>Interest</th>
-                            <th>Engagement Strategy</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Potential Employers/Clients</td>
-                            <td>External</td>
-                            <td>To quickly find specific examples of your best work, assess your skills, and understand your brand</td>
-                            <td>High</td>
-                            <td>High</td>
-                            <td>Manage Closely - Ensure the site is user-friendly, showcases relevant projects prominently, and has clear, accessible contact information.</td>
-                        </tr>
-                        <tr>
-                            <td>The Creator</td>
-                            <td>Internal</td>
-                            <td>The project owner and primary driver. You need a platform that effectively represents your brand and professional abilities</td>
-                            <td>High</td>
-                            <td>High</td>
-                            <td>Manage Closely - Define clear objectives for the site. Conduct regular self-reviews and performance tracking.</td>
-                        </tr>
-                        <tr>
-                            <td>Friends and Family</td>
-                            <td>External</td>
-                            <td>Personal network that can provide a "sanity check" and initial feedback on the site's design</td>
-                            <td>Low</td>
-                            <td>High</td>
-                            <td>Keep Informed - Share updates and ask for general feedback on the look, feel, and clarity of the site.</td>
-                        </tr>
-                        <tr>
-                            <td>Recruiters/HR Professionals</td>
-                            <td>External</td>
-                            <td>To efficiently scan your credentials, skills, and experience for potential job fit</td>
-                            <td>High</td>
-                            <td>Medium</td>
-                            <td>Keep Satisfied - Ensure your resume is easily downloadable and that your skills are clearly listed.</td>
-                        </tr>
-                        <tr>
-                            <td>Mentors/Industry Peers</td>
-                            <td>External</td>
-                            <td>To review your work and provide expert feedback on your projects and overall presentation</td>
-                            <td>Medium</td>
-                            <td>Medium</td>
-                            <td>Keep Informed - Send direct links to specific projects for targeted feedback.</td>
-                        </tr>
-                        <tr>
-                            <td>Website Hosting/Platform</td>
-                            <td>Internal</td>
-                            <td>The technical foundation of your site. Need to manage costs and technical requirements</td>
-                            <td>Medium</td>
-                            <td>Low</td>
-                            <td>Keep Satisfied - Research and choose a reliable host or platform that meets your needs.</td>
-                        </tr>
-                        <tr>
-                            <td>The General Public</td>
-                            <td>External</td>
-                            <td>General visitors who may stumble upon your site through search engines or social media</td>
-                            <td>Low</td>
-                            <td>Low</td>
-                            <td>Monitor - Focus on a clean design and clear navigation.</td>
-                        </tr>
-                        <tr>
-                            <td>Educational Institution/Instructor</td>
-                            <td>External</td>
-                            <td>Assess the quality, completeness, and professionalism of the portfolio as part of course evaluation</td>
-                            <td>High</td>
-                            <td>Medium</td>
-                            <td>Keep Satisfied - Follow assignment requirements closely, submit polished deliverables.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                
-                <div class="image-container">
-                    <img src="square.JPG" alt="Power-Interest Grid">
-                    <img src="legitdeliverables.JPG" alt="Deliverables Breakdown">
-                    <img src="budgetestimation.JPG" alt="Budget Estimation">
+                <div class="review-section">
+                    <h5>🎯 Overall Website Assessment</h5>
+                    <p>Angel's closure website demonstrates strong professional qualities with a clean URL structure and well-organized content. The site is visually polished with consistent styling throughout, earning full marks in most categories.</p>
+                </div>
+
+                <div class="review-section">
+                    <h5>💪 Strengths Identified</h5>
+                    <ul>
+                        <li><strong>Professional Presentation:</strong> Clean, professional URL and visually polished design with consistent styling across all pages</li>
+                        <li><strong>Content Organization:</strong> Well-structured content that is logically organized and easy to follow</li>
+                        <li><strong>Comprehensive Documentation:</strong> Complete project charter with all required sections including scope, stakeholder register, budget estimation, and methodology diagram</li>
+                        <li><strong>Strong STAR Stories:</strong> All five STAR stories were complete and well-articulated, earning full points</li>
+                        <li><strong>Excellent Stakeholder Interviews:</strong> All three interviews were thoroughly documented with comprehensive write-ups</li>
+                        <li><strong>Quality Bite-Sized Lessons:</strong> Relevant topic selection with engaging and informational content that earned perfect scores</li>
+                    </ul>
+                </div>
+
+                <div class="review-section">
+                    <h5>🔧 Areas for Improvement</h5>
+                    <ul>
+                        <li><strong>Navigation Issues:</strong> No links to navigate between pages, which impacts user experience</li>
+                        <li><strong>Internal Linking:</strong> Status report section on homepage does not link to the status update page</li>
+                        <li><strong>Link Consistency:</strong> Some links (like the reports tab in documentation hub) incorrectly point to the project closure document</li>
+                        <li><strong>Back Navigation:</strong> No back links from certain pages like the stakeholder interview documentation</li>
+                        <li><strong>Peer Reviews:</strong> Missing all peer review components (0/15 points) - no feedback received from or provided to classmates</li>
+                    </ul>
+                </div>
+
+                <div class="review-section">
+                    <h5>📋 Specific Recommendations</h5>
+                    <ul>
+                        <li>Add navigation menu or links to allow users to move between pages seamlessly</li>
+                        <li>Create proper linking from status report section to status update page</li>
+                        <li>Review and correct all internal links to ensure they point to the correct destinations</li>
+                        <li>Consider separating deliverables and budget estimation into their own dedicated sections for better clarity</li>
+                        <li>Add STAR story prompts to explain which behavioral question each story addresses</li>
+                        <li>Implement back navigation buttons on all sub-pages</li>
+                    </ul>
+                </div>
+
+                <div class="review-section">
+                    <h5>📊 Score Breakdown</h5>
+                    <p><strong>Closure Website:</strong> 77.0 / 77 points</p>
+                    <p><strong>Stakeholder Interview Recordings:</strong> 15.0 / 15 points</p>
+                    <p><strong>Bite-Sized Lessons:</strong> 25.0 / 25 points</p>
+                    <p><strong>Peer Reviews:</strong> 0.0 / 15 points</p>
                 </div>
             </div>
-        </div>
 
-        <div class="section" id="section6">
-            <div class="section-header">
-                <h2 class="section-title">6. Methodology Explanation</h2>
-            </div>
-            <div class="section-content">
-                <div class="instructions">
-                    <strong>Instructions:</strong>
-                    Select either predictive, hybrid-incremental, hybrid-iterative, or agile. Justify your choice with 3-4 reasons specific to your project.
+            <!-- Review from Fernando Olvera -->
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-icon">👤</div>
+                    <div class="reviewer-info">
+                        <h4>Fernando Olvera</h4>
+                        <p>Peer Reviewer | Business-Align Job Hunt Project</p>
+                        <span class="score-badge">Grade: 123.8 / 140 (88.4%)</span>
+                    </div>
                 </div>
-                
-                <h4>Hybrid Approach</h4>
-                <p>I'll be going with a Hybrid - Iterative approach. It lets me stay on track and prioritize deliverables, as well as adapting flexibly while moving toward a fulfilling promised vision statement.</p>
-                
-                <div class="image-container">
-                    <img src="diagram.JPG" alt="Methodology Diagram">
+
+                <div class="review-section">
+                    <h5>🎯 Overall Website Assessment</h5>
+                    <p>The closure website is clean, visually polished, and demonstrates a strong sense of branding. Content is well organized across multiple linked pages, and sections like STAR Stories, Stakeholder Interviews, and Closure Report are structured clearly and professionally. Navigation is generally easy to follow between homepage, dashboard, and supporting documents.</p>
+                </div>
+
+                <div class="review-section">
+                    <h5>💪 Strengths Identified</h5>
+                    <ul>
+                        <li><strong>Visual Excellence:</strong> Clean and professional design with strong branding throughout the site</li>
+                        <li><strong>Professional Structure:</strong> Well-organized content across multiple pages with clear sectioning</li>
+                        <li><strong>Easy Navigation:</strong> Smooth transitions between homepage, dashboard, and supporting documents</li>
+                        <li><strong>Complete Documentation:</strong> Comprehensive project closure document with all required sections fully developed</li>
+                        <li><strong>Strong STAR Narratives:</strong> All five STAR stories are well-crafted and complete</li>
+                        <li><strong>Thorough Interviews:</strong> Complete stakeholder interview documentation with detailed write-ups</li>
+                        <li><strong>Quality Educational Content:</strong> Excellent bite-sized lessons that are both informative and engaging</li>
+                    </ul>
+                </div>
+
+                <div class="review-section">
+                    <h5>🔧 Areas for Improvement</h5>
+                    <ul>
+                        <li><strong>Content Duplication:</strong> STAR Story sections appear in both the Charter and on a standalone STAR page, creating redundancy</li>
+                        <li><strong>Charter Alignment:</strong> Some inconsistencies across charter sections (lost 3 points for alignment issues)</li>
+                        <li><strong>Status Report Detail:</strong> Reports mention challenges but sometimes only briefly, lacking depth in risk and issue documentation</li>
+                        <li><strong>Peer Review Completion:</strong> Only received one peer review (3.8/15 points) and did not provide peer feedback to classmates</li>
+                    </ul>
+                </div>
+
+                <div class="review-section">
+                    <h5>📋 Specific Recommendations</h5>
+                    <ul>
+                        <li>Consolidate duplicate STAR Story sections to maintain clarity and reduce redundancy - choose one location (either Charter or standalone page) for the complete STAR stories</li>
+                        <li>Review all charter sections to ensure information aligns consistently with no contradictions</li>
+                        <li>Expand status reports to include more detailed descriptions of challenges, risks, and issues encountered</li>
+                        <li>Participate in peer review process by both receiving and providing thoughtful feedback to classmates</li>
+                        <li>Consider adding more specific metrics or examples when discussing project challenges</li>
+                    </ul>
+                </div>
+
+                <div class="review-section">
+                    <h5>📊 Score Breakdown</h5>
+                    <p><strong>Closure Website:</strong> 73.0 / 77 points</p>
+                    <p><strong>Stakeholder Interview Recordings:</strong> 15.0 / 15 points</p>
+                    <p><strong>Bite-Sized Lessons:</strong> 25.0 / 25 points</p>
+                    <p><strong>Peer Reviews:</strong> 3.8 / 15 points</p>
                 </div>
             </div>
         </div>
 
-        <div class="section" id="section7">
-            <div class="section-header">
-                <h2 class="section-title">7. Project Tool</h2>
+        <div class="summary-grid">
+            <div class="summary-card">
+                <h4>Breaking Into Tech</h4>
+                <div class="score">90.7%</div>
+                <p>127.0 / 140 points</p>
             </div>
-            <div class="section-content">
-                <div class="instructions">
-                    <strong>Instructions:</strong>
-                    Selection Explanation
-                </div>
-                
-                <h4>Microsoft Planner</h4>
-                <p>I went with Microsoft Planner. Visually the tool has a great aesthetic, with a user-friendly interface to boot. I particularly enjoy the automated variety of view-boards, my favorite being the charts tabs. There is an option given to attach URL links for assignments which isn't ideal, but seeing as I'll be using GitHub as a repository convenience won't be an issue.</p>
-                
-                <div class="image-container">
-                    <img src="grid.JPG" alt="Microsoft Planner Grid View">
-                </div>
+            <div class="summary-card">
+                <h4>Business-Align Job Hunt</h4>
+                <div class="score">88.4%</div>
+                <p>123.8 / 140 points</p>
             </div>
-        </div>
-
-        <div class="section" id="section8">
-            <div class="section-header">
-                <h2 class="section-title">8. Additional Charter Components</h2>
-            </div>
-            <div class="section-content">
-                <div class="instructions">
-                    <strong>Note for Future Updates:</strong>
-                    This charter will be expanded throughout the semester as we cover additional project management components including:
-                </div>
-                <ul>
-                    <li>Project Methodology Selection</li>
-                    <li>Deliverables & Definition of Done</li>
-                    <li>High-Level Timeline & Milestones</li>
-                    <li>Execution Plan Overview</li>
-                    <li>Risk Register</li>
-                    <li>Acceptance Criteria</li>
-                    <li>Project Manager Authority & Approvals</li>
-                </ul>
+            <div class="summary-card">
+                <h4>Average Score</h4>
+                <div class="score">89.6%</div>
+                <p>Across Both Projects</p>
             </div>
         </div>
-    </div>
-
-    <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑ Top</button>
+    </main>
 </body>
 </html>
